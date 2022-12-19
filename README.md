@@ -53,40 +53,76 @@ API YaMDb позволяет работать со следующими сущн
 * Клонировать репозиторий и перейти в него в командной строке
 
 ```
-git clone git@github.com:vkfedosov/api_final_yatube.git
+git clone git@github.com:LevLM/infra_sp2.git
+```
+cd infra_sp2
 ```
 
-```
-cd api_final_yatube
-```
-
-* Cоздать и активировать виртуальное окружение:
+Переходим в папку с файлом docker-compose.yaml:
 
 ```
-python -m venv env
+cd infra
 ```
 
-```
-venv/scripts/activate
-```
-
-* Установить зависимости из файла ```requirements.txt```:
+Разворачиваем образы и сразу запускаем проект infra из 3 контейнеров (db_1, web_1, nginx_1):
 
 ```
-pip install -r requirements.txt
+docker-compose up -d --build
 ```
 
-* Выполнить миграции:
+Выполняем миграции:
 
 ```
-python manage.py migrate
+docker-compose exec web python manage.py migrate
 ```
 
-* Запустить проект:
+Создаем суперпользователя:
 
 ```
-python manage.py runserver
+docker-compose exec web python manage.py createsuperuser
 ```
+
+Подключаем статику:
+
+```
+docker-compose exec web python manage.py collectstatic --no-input
+```
+
+Заполняем базу исходными данными:
+
+```
+docker-compose exec web python manage.py loaddata fixtures.json
+```
+
+Создаем дамп (резервную копию) базы:
+
+```
+docker-compose exec web python manage.py dumpdata > fixtures.json
+```
+
+Загрузить в базу данные из дампа (файл fixtures.json разместить в папке с Dockerfile):
+
+```
+docker-compose exec web python manage.py loaddata fixtures.json
+```
+
+Проверяем работоспособность приложения:
+
+```
+ http://localhost/admin/
+
+
+## Шаблон наполнения env-файла (виртуальное окружение):
+
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=ghbdtn11
+DB_HOST=db
+DB_PORT=5432
+
+Данные внести в файл ".env", поместить его в папке Infra (где находится файл docker-compose.yaml)
+
 
 ## Документация для YaMDb доступна по адресу:
 
