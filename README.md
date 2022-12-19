@@ -54,59 +54,58 @@ API YaMDb позволяет работать со следующими сущн
 
 ```
 git clone git@github.com:LevLM/infra_sp2.git
-```
 cd infra_sp2
 ```
 
-Переходим в папку с файлом docker-compose.yaml:
+* Переходим в папку с файлом docker-compose.yaml:
 
 ```
 cd infra
 ```
 
-Разворачиваем образы и сразу запускаем проект infra из 3 контейнеров (db_1, web_1, nginx_1):
+* Разворачиваем образы и сразу запускаем проект infra из 3 контейнеров (db_1, web_1, nginx_1):
 
 ```
 docker-compose up -d --build
 ```
 
-Выполняем миграции:
+* Выполняем миграции:
 
 ```
 docker-compose exec web python manage.py migrate
 ```
 
-Создаем суперпользователя:
+* Создаем суперпользователя:
 
 ```
 docker-compose exec web python manage.py createsuperuser
 ```
 
-Подключаем статику:
+* Подключаем статику:
 
 ```
 docker-compose exec web python manage.py collectstatic --no-input
 ```
 
-Заполняем базу исходными данными:
+* Заполняем базу исходными данными:
 
 ```
 docker-compose exec web python manage.py loaddata fixtures.json
 ```
 
-Создаем дамп (резервную копию) базы:
+* Создаем дамп (резервную копию) базы:
 
 ```
 docker-compose exec web python manage.py dumpdata > fixtures.json
 ```
 
-Загрузить в базу данные из дампа (файл fixtures.json разместить в папке с Dockerfile):
+* Загрузить в базу данные из дампа (файл fixtures.json разместить в папке с Dockerfile):
 
 ```
 docker-compose exec web python manage.py loaddata fixtures.json
 ```
 
-Проверяем работоспособность приложения:
+* Проверяем работоспособность приложения:
 
 ```
  http://localhost/admin/
