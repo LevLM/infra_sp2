@@ -109,7 +109,7 @@ docker-compose exec web python manage.py loaddata fixtures.json
 
 ```
  http://localhost/admin/
-
+```
 
 ## Шаблон наполнения env-файла (виртуальное окружение):
 
