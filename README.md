@@ -113,12 +113,14 @@ docker-compose exec web python manage.py loaddata fixtures.json
 
 ## Шаблон наполнения env-файла (виртуальное окружение):
 
+```
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=ghbdtn11
 DB_HOST=db
 DB_PORT=5432
+```
 
 Данные внести в файл ".env", поместить его в папке Infra (где находится файл docker-compose.yaml)
 
