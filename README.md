@@ -99,7 +99,7 @@ docker-compose exec web python manage.py loaddata fixtures.json
 docker-compose exec web python manage.py dumpdata > fixtures.json
 ```
 
-* Загрузить в базу данные из дампа (файл fixtures.json разместить в папке с Dockerfile):
+* Загрузить в базу данные из дампа. Файл fixtures.json разместить в папке с Dockerfile (или в корневой папке проекта, и тогда указать путь ../fixtures.json):
 
 ```
 docker-compose exec web python manage.py loaddata fixtures.json
@@ -114,7 +114,6 @@ docker-compose exec web python manage.py loaddata fixtures.json
 ## Шаблон наполнения env-файла (виртуальное окружение):
 
 ```
-DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=ghbdtn11
